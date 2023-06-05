@@ -12,7 +12,7 @@ def main():
                 print("Speak now...")
                 audio_data = r.record(source, duration=5)  # adjust the duration as needed
                 # Convert speech to text
-                text = r.recognize_google(audio_data)
+                text = r.recognize_google(audio_data, language='en-GB')
                 print(text)
             except sr.UnknownValueError:
                 # Google Speech Recognition could not understand the audio
