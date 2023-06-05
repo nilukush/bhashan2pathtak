@@ -8,4 +8,4 @@ Simple python application to take your speech and convert into text
 * `pip install SpeechRecognition`
 
 # HOW TO run
-* `python 3 speech_to_text.py`
+* `python3 speech_to_text.py`
