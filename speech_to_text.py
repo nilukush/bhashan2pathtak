@@ -1,5 +1,6 @@
 import speech_recognition as sr
 
+
 def main():
     # Create a Recognizer instance
     r = sr.Recognizer()
@@ -20,6 +21,7 @@ def main():
             except sr.RequestError as e:
                 # Could not request results from Google Speech Recognition service
                 print(f"Could not request results from Google Speech Recognition service; {e}")
+
 
 if __name__ == "__main__":
     main()
