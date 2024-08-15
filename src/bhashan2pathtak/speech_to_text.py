@@ -51,7 +51,7 @@ import json
 def load_config():
     # Try to load from config file first
     try:
-        with open('config.json', 'r') as config_file:
+        with open('../../config.json', 'r') as config_file:
             return json.load(config_file)
     except FileNotFoundError:
         return {}
@@ -64,9 +64,26 @@ def get_wit_token():
         return token
 
     # If not in environment, try to get from config file
-    config = load_config()
-    return config.get('WIT_AI_TOKEN')
+    try:
+        with open('config.json', 'r') as config_file:
+            config = json.load(config_file)
+            token = config.get('WIT_AI_TOKEN')
+            if token:
+                return token
+    except FileNotFoundError:
+        pass
 
+        # If still no token, guide the user
+    print("Wit.ai token not found. Please follow these steps to set up your token:")
+    print("1. Go to https://wit.ai/ and create an account if you haven't already.")
+    print("2. Create a new Wit.ai app and copy your Client Access Token.")
+    print("3. Set your token using one of these methods:")
+    print("   a. Set an environment variable:")
+    print("      export WIT_AI_TOKEN=your_token_here")
+    print("   b. Create a config.json file in the current directory with the following content:")
+    print("      {\"WIT_AI_TOKEN\": \"your_token_here\"}")
+    print("\nAfter setting up your token, run this program again.")
+    sys.exit(1)
 
 def transcribe_wit(audio_data, wit_client):
     try:
@@ -83,6 +100,7 @@ def main():
     wit_token = get_wit_token()
     if not wit_token:
         print("Error: WIT_AI_TOKEN not found in environment variables or config file")
+        print("Please set the WIT_AI_TOKEN environment variable or create a config.json file")
         return
 
     recognizer = sr.Recognizer()
